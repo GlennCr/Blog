@@ -24,7 +24,6 @@
 			$output = array();
 			$end = $start + $quantity - 1;
 			$ind = 0;
-		
 			if($start <= $end AND $end < $this->length())
 			{ 
 				for($i = $start; $i <= $end; $i++)
@@ -35,7 +34,7 @@
 			} 
 			else
 			{
-				die('Error! @Model_Post->select_posts: Attempted to access a value out of range! Values: Start: '.$start.' Quantity: '.$quantity);
+				die('Error! @Model_Post->select_posts: Attempted to access a value out of range! Values: Start: '.$start.' Quantity: '.$quantity.' '.$end.'errr');
 			}
 			
 			return $output;
@@ -43,19 +42,20 @@
 		
 		public function add_post($post)
 		{//insert new post row to table 'posts'
-			$query = DB::query(Database::INSERT, "INSERT INTO posts (title, content, author) VALUES (".$post['title'].", ".$post['content'].", ".$post['author'].")")->execute();
+			$query = DB::query(Database::INSERT, "INSERT INTO `posts` (title, content, author) VALUES (\"".$post['title']."\", \"".$post['content']."\", \"".$post['author']."\")")->execute();
 		}
 		
 		public function edit_post($post)
 		{	//pass in a post, what ever is stored in the title and content will be updated to match in the table
 			//update a post row with the revised information.
-			$query = DB::query(Database::UPDATE, 'UPDATE posts (title, author) VALUES ('.$post['author'].', '.$post['content'].' WHERE p_id = '.$post['p_id'])->execute();
-			
+			//die('UPDATE posts (title, content) VALUES ('.$post['title'].', '.$post['content'].' WHERE p_id = '.$post['p_id']);
+			$query = DB::query(Database::UPDATE, 'UPDATE `posts` SET `title` = \''.$post['title'].'\', `content` = "'.$post['content'].'" WHERE p_id = '.$post['p_id'] )->execute();
+			//UPDATE `blog`.`posts` SET `content` = 'Just another post. Made to better show the ''all posts'' controller and what it''s doing as well as give me something else to click modify on. Nothing to see here really. Nothing at all. p' WHERE `posts`.`p_id` =6;
 		}
 		
 		public function delete_post($p_id)
 		{//delete the post with the id $p_id
-			$query = DB::query(Database::DELETE, 'DELETE FROM posts WHERE p_id = '.$post['p_id'])->execute();
+			$query = DB::query(Database::DELETE, 'DELETE FROM posts WHERE p_id = '.$p_id)->execute();
 		}
 		
 		public function query_posts($p_id = -1, $quantity = 0)

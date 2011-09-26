@@ -86,6 +86,7 @@
 			echo Form::input('userfield');
 			echo Form::password('passfield')."</br>";
 			echo Form::submit('Login', 'login');
+			echo Form::close();
 		?>
 		</div>
 		

@@ -16,6 +16,17 @@
 			//display site view with 'logged in' message if success
 			$this->template->debug = "Hello World!";
 			
+			//unable to get $_POST values so this doesn't do much here
+			
+			$view_input = array();
+			if(Arr::get($_POST, 'hidden') == 'log_auth')
+			{	
+				$keys = array('username', 'password');
+				$view_input = Arr::extract($_POST, $keys, NULL);
+				$username = $view_input['username'];
+				$password = $view_input['password'];
+				die('got $_POST values! Remove this die! Figure out Auth!');
+			}
 		}
 	}
 

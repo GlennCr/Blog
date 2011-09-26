@@ -20,9 +20,9 @@
 		
 				$post_model->query_posts($p_id);
 			}
+			
 			$post = $post_model->select_posts(0,1);
 			$this->template->post = $post[0];
-			
 			$this->template->pagetitle = 'Modify '.$post[0]['title'];
 			//below are from an example, what are these for?
 			//$this->template->content = View::factory('elements/form');
@@ -35,11 +35,18 @@
 			$post_model = Model::factory('Post');
 			//get information from modify's form.
 			$view_input = array();
-			if(Arr::get($_POST, 'hidden' == 'form_sent'))
+			if(Arr::get($_POST, 'hidden') == 'form_sent')
 			{
-				$keys = array('title', 'content', 'post');
+				$keys = array('p_id', 'title', 'content');
 				$view_input = Arr::extract($_POST, $keys, NULL);
-				die('interesting');
+
+				$p_id = $view_input['p_id'];
+				$title = $view_input['title'];
+				$content = $view_input['content'];
+				$postedit = array('p_id' => $p_id, 'title' => $title, 'content' => $content);
+				
+				$post_model->edit_post($postedit);
+			
 			}
 			else
 			{
@@ -47,12 +54,11 @@
 			}
 			
 			//redirect would be better here?
-			$post = $view_input['post'];
-			$post['title'] = $view_input['title'];
-			$post['content'] = $view_input['content'];
+			$post_model->query_posts($p_id);
+			$post = $post_model->select_posts(0,1);
+			$this->template->post = $post[0];
+			$this->template->pagetitle = 'Modify '.$post[0]['title'];
 			
-			$post_model->edit_post($post);
-			$this->template->post = $post_model->select_posts(0,1);
 			
 			
 		}
@@ -60,34 +66,49 @@
 		public function action_create()
 		{
 			$post_model = Model::factory('Post');
-			if(isset($_POST['post']))
+			if(Arr::get($_POST, 'hidden') == 'add_post')
 			{
-				$post = $_POST['post'];
+				$keys = array('title', 'author', 'content');
+				$view_input = Arr::extract($_POST, $keys, NULL);
 				
-				$post_model->add_post($post);
-				$this->template->post = $post_model->select_posts(0,1);
+				$post_model->add_post($view_input);
 			}
 			else
 			{
 				die('Something in Controller_Editpost::action_create() failed!');
 			}
+
+			$post_model->query_posts();
+			$post = $post_model->select_posts(0,1);
+			$this->template->post = $post[0];
+			$this->template->pagetitle = 'Modify '.$post[0]['title'];
+			
 		}
 		
 		public function action_delete()
 		{
+		
 			$post_model = Model::factory('Post');
-			if(isset($_POST['post']))
+			//get information from modify's form.
+			$p_id = -1;
+			if(Arr::get($_POST, 'hidden') == 'delete')
 			{
-				$post_model->delete_post($_POST['p_id']);
+				$p_id = Arr::get($_POST, 'p_id');
 				
-				$post_model->query_posts($_POST['p_id'] - 1);
-				$this->template->post = $post_model->select_posts(0,1);
+				//die(''.count($post_model->posts));
+				$post_model->delete_post($p_id);
+				
 			}
 			else
 			{
-				die('Something in Controller_Editpost::action_delete() failed!');
+				die('Something in Controller_Editpost::action_update() failed!');
 			}
-			//redirect would be better here
+			
+			$post_model->query_posts();
+			$post = $post_model->select_posts(0,1);
+			$this->template->post = $post[0];
+			$this->template->pagetitle = 'Modify '.$post[0]['title'];
+			
 			
 		}
 		

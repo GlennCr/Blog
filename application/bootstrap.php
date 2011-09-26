@@ -125,6 +125,12 @@ Route::set('viewall', '(<controller>(/<action>(/<id>)))')
 		'controller' => 'front',
 		'action'	=> 	'allposts',
 	));
+
+Route::set('modify', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'editpost',
+		'action'	=> 'create',
+	));
 	
 Route::set('modify', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
@@ -142,7 +148,6 @@ Route::set('modify', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'editpost',
 		'action'    => 'index',
-		'action'	=> 'update',
 	));
 
  

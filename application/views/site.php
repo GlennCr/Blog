@@ -79,13 +79,16 @@
 	</head>
 	<body>
 		
-			<p class="login">
-			echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
-			echo Form::hidden('hidden', 'log_auth');
-			echo Form::input('userfield', 'username');
-			echo Form::password('passfield', 'password');
-			echo Form::submit('Login', 'login');
-			</p>
+			<div class="login">
+			<?PHP
+				echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
+				echo Form::hidden('hidden', 'log_auth');
+				echo Form::input('userfield', 'username');
+				echo Form::password('passfield', 'password');
+				echo Form::submit('Login', 'login');
+				echo Form::close();
+			?>
+			</div>
 		
 		<div class="par">
 		<?PHP 
@@ -93,16 +96,18 @@
 			//Set title as a link, inline the p_id for $_GET to use.
 			foreach($posts as $post)
 			{
-			$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."..."); ?>
-				<div class="ex">
-				<a href="http://dev.vm/blog/viewpost/?p_id=<?PHP echo $post['p_id']; ?>" class="title">
-				<?PHP echo $post['title']; ?></a> </br>
-				<p class="content"><?PHP echo $content; ?></p></br>
-				<p class="details"><?PHP echo $post['author']." | ".$post['timestamp']; ?></p>
-				<hr>
-				</div>
+			$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."...");
+				echo '<div class="ex">';
+				echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'" class="title">';
+				echo $post['title'].'</a> </br>';
+				echo '<p class="content">'.$content.'</p></br>';
+				echo '<p class="details">'.$post['author'].' | '.$post['timestamp'].'</p>';
+				echo '<hr>';
 				
-				<?PHP
+				echo '<form action="http://dev.vm/blog/editpost/?p_id='.$post['p_id'].'" method="post" class="details">';
+				echo Form::submit('modify', 'editpost');
+				echo Form::close();
+				echo "</div>";
 			}		
 		?>
 		</div>

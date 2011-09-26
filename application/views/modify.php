@@ -46,12 +46,12 @@
 				text-align	:left;
 				top			:-50px;
 			}
-			.details
+			.delete
 			{	position	:relative;
 				font-size	:10px;
 				font-family	:Arial;
 				text-align	:right;
-				top			:-50px;
+				top			:+20px;
 			}
 			
 			/*Divisions*/
@@ -86,10 +86,6 @@
 		
 	</head>
 	<body>
-		<?PHP 
-		$_POST['post'] = $post;
-		$_POST['p_id'] = $post['p_id']
-		?>
 		
 		<p class="home">
 			<a href="http://dev.vm/blog/">HOME</a>
@@ -101,15 +97,35 @@
 			$content = $post['content'];
 			
 			echo $title.'</br>';
-			echo '<div><form action="http://dev.vm/blog/editpost/update" method=\"post\"></div>'; 
+			echo "<div><form action=\"http://dev.vm/blog/editpost/update\" method=\"post\"></div>"; 
 			//Form::open('update') seems intent on ignoring my URI shortening rules...?
 			echo '<div>'.Form::hidden('hidden', 'form_sent').'</div>';
-			echo '<div>'.Form::hidden('post', $post).'</div>';
+			echo '<div>'.Form::hidden('p_id', $post['p_id']).'</div>';
 			echo '<div>'.Form::input('title', $post['title']).'</div>';
 			echo '<div>'.Form::textarea('content', $post['content']).'</div>';
 			echo Form::submit('submit', 'Modify Post');
 			echo Form::close();
-		?>
+			
+			echo '<div>';
+			echo "<div><form action=\"http://dev.vm/blog/editpost/create\" method=\"post\"></div>"; 
+			echo Form::hidden('hidden', 'add_post');
+			echo '<div>Title: '.Form::input('title', 'Title').'</div>';
+			echo '<div>Author: '.Form::input('author', 'Author').'</div>';
+			echo '<div>'.Form::textarea('content').'</div>';
+			echo Form::submit('submit', 'Add Post');
+			echo Form::close();
+			echo '</div>';
+
+			echo '<div class="delete">';
+			echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>"; 
+			echo Form::hidden('p_id', $post['p_id']);
+			echo Form::hidden('hidden', 'delete');
+			echo Form::submit('submit', '!DELETE POST!');
+			echo Form::close();
+			echo '</div>';
+			
+
+			?>
 		</div>
 		
 		<p class="home">
