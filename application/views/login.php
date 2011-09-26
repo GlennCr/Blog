@@ -1,8 +1,7 @@
-
 <html>
 	<head>
 		<style type ="text/css">
-/*General Styling*/
+			/*General Styling*/
 			body
 			{	font-family	:Georgia;
 			}
@@ -45,14 +44,14 @@
 				position	:relative;
 				font-size	:20px;
 				text-align	:left;
-				//top			:-50px;
+				top			:-50px;
 			}
 			.details
 			{	position	:relative;
 				font-size	:10px;
 				font-family	:Arial;
 				text-align	:right;
-				//top			:-50px;
+				top			:-50px;
 			}
 			
 			/*Divisions*/
@@ -74,42 +73,20 @@
 			}
 			
 		</style>
-		<title>Home</title>
+		<title>Login</title>
 		
 	</head>
 	<body>
-		
-			<p class="login">
+		<div class="home">
+		<?PHP 
+			echo "Login Failed: <br/>"; 
 			echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
 			echo Form::hidden('hidden', 'log_auth');
-			echo Form::input('userfield', 'username');
-			echo Form::password('passfield', 'password');
+			echo "Username | Password </br>";
+			echo Form::input('userfield');
+			echo Form::password('passfield')."</br>";
 			echo Form::submit('Login', 'login');
-			</p>
-		
-		<div class="par">
-		<?PHP 
-			//each post gets it's own box, with style attached.
-			//Set title as a link, inline the p_id for $_GET to use.
-			foreach($posts as $post)
-			{
-			$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."..."); ?>
-				<div class="ex">
-				<a href="http://dev.vm/blog/viewpost/?p_id=<?PHP echo $post['p_id']; ?>" class="title">
-				<?PHP echo $post['title']; ?></a> </br>
-				<p class="content"><?PHP echo $content; ?></p></br>
-				<p class="details"><?PHP echo $post['author']." | ".$post['timestamp']; ?></p>
-				<hr>
-				</div>
-				
-				<?PHP
-			}		
 		?>
-		</div>
-		
-		<div class="home">
-			<a href="http://dev.vm/blog/front/allposts"> View All Posts</a></br></br>
-			<a href="http://dev.vm/blog/">Home</a></br>
 		</div>
 		
 	</body>

@@ -97,7 +97,7 @@ Kohana::$config->attach(new Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
+		'auth'       => MODPATH.'auth',       // Basic authentication
 	// 'cache'      => MODPATH.'cache',      // Caching with multiple backends
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
 		'database'   => MODPATH.'database',   // Database access
@@ -111,8 +111,51 @@ Kohana::modules(array(
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+
+
+ 
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller' => 'hello',
+		'controller' => 'front',
 		'action'     => 'index',
 	));
+
+Route::set('viewall', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'front',
+		'action'	=> 	'allposts',
+	));
+	
+Route::set('modify', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'editpost',
+		'action'	=> 'update',
+	));
+
+Route::set('modify', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'editpost',
+		'action'	=> 'delete',
+	));	
+	
+Route::set('modify', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'editpost',
+		'action'    => 'index',
+		'action'	=> 'update',
+	));
+
+ 
+Route::set('auth', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'auth',
+		'action'     => 'index',
+	));
+ 
+ 
+Route::set('view', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'viewpost',
+		'action'     => 'index',
+	));
+	

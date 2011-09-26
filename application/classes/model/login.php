@@ -1,0 +1,1 @@
+<?PHP	class Model_Login extends Model_Database	{				private $database;				public function __construct()		{//empty constructor		}		/*		public function login($user, $pass)		{			return false; //for now use dummy return value in case used early.		}				public function logout($user)		{			return false; //for now use dummy return value in case used early.		}	*/	}?>

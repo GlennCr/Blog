@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<style type ="text/css">
-/*General Styling*/
+			/*General Styling*/
 			body
 			{	font-family	:Georgia;
 			}
@@ -45,14 +45,14 @@
 				position	:relative;
 				font-size	:20px;
 				text-align	:left;
-				//top			:-50px;
+				top			:-50px;
 			}
 			.details
 			{	position	:relative;
 				font-size	:10px;
 				font-family	:Arial;
 				text-align	:right;
-				//top			:-50px;
+				top			:-50px;
 			}
 			
 			/*Divisions*/
@@ -74,43 +74,37 @@
 			}
 			
 		</style>
-		<title>Home</title>
+		<title>Post: </title>
 		
 	</head>
 	<body>
 		
-			<p class="login">
-			echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
-			echo Form::hidden('hidden', 'log_auth');
-			echo Form::input('userfield', 'username');
-			echo Form::password('passfield', 'password');
-			echo Form::submit('Login', 'login');
-			</p>
-		
-		<div class="par">
+		<p class="home">
+			<a href="http://dev.vm/blog/">HOME</a>
+		</p>
+			
 		<?PHP 
-			//each post gets it's own box, with style attached.
-			//Set title as a link, inline the p_id for $_GET to use.
+			//Take the post passed over and display it nicely. Include a link back to the frontpage.
+			//Offer an edit post button if you are logged in.
 			foreach($posts as $post)
-			{
-			$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."..."); ?>
+			{ //iterate incase multiple posts somehow included
+				?>
 				<div class="ex">
-				<a href="http://dev.vm/blog/viewpost/?p_id=<?PHP echo $post['p_id']; ?>" class="title">
-				<?PHP echo $post['title']; ?></a> </br>
-				<p class="content"><?PHP echo $content; ?></p></br>
-				<p class="details"><?PHP echo $post['author']." | ".$post['timestamp']; ?></p>
-				<hr>
-				</div>
+				<p class="title">
+				<?PHP echo $post['title'] ?></p> </br>
+				<p class="content"><?PHP echo $post['content'] ?></p> </br>
+				<p class="details"><?PHP echo $post['author']." | ".$post['timestamp'] ?></p>
 				
+				</div>
 				<?PHP
-			}		
+			}
 		?>
 		</div>
 		
-		<div class="home">
-			<a href="http://dev.vm/blog/front/allposts"> View All Posts</a></br></br>
-			<a href="http://dev.vm/blog/">Home</a></br>
-		</div>
+		<p class="home">
+			<a href="http://dev.vm/blog/">HOME</a>
+			
+		</p>
 		
 	</body>
 </html>
