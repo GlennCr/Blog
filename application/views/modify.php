@@ -93,17 +93,18 @@
 		
 		<div class="ex">
 		<?PHP
-			$title = $post['title'];
-			$content = $post['content'];
+
+			$title = $posts['title'];
+			$content = $posts['content'];
 			
 			echo $title.'</br>';
 			echo "<div><form action=\"http://dev.vm/blog/editpost/update\" method=\"post\"></div>"; 
 			//Form::open('update') seems intent on ignoring my URI shortening rules...?
 			echo '<div>'.Form::hidden('hidden', 'form_sent').'</div>';
-			echo '<div>'.Form::hidden('p_id', $post['p_id']).'</div>';
-			echo '<div>'.Form::input('title', $post['title']).'</div>';
-			echo '<div>'.Form::textarea('content', $post['content']).'</div>';
-			echo Form::submit('submit', 'Modify Post');
+			echo '<div>'.Form::hidden('p_id', $posts['p_id']).'</div>';
+			echo '<div>'.Form::input('title', $posts['title']).'</div>';
+			echo '<div>'.Form::textarea('content', $posts['content']).'</div>';
+			echo Form::submit('submit', 'Modify post');
 			echo Form::close();
 			
 			echo '<div>';
@@ -118,9 +119,9 @@
 
 			echo '<div class="delete">';
 			echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>"; 
-			echo Form::hidden('p_id', $post['p_id']);
+			echo Form::hidden('p_id', $posts['p_id']);
 			echo Form::hidden('hidden', 'delete');
-			echo Form::submit('submit', '!DELETE POST!');
+			echo Form::submit('submit', 'Delete');
 			echo Form::close();
 			echo '</div>';
 			

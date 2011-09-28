@@ -4,7 +4,7 @@
 //repository/blog/application/classes/controller/front.php
 /*Loads up a certain number of posts to display on the page.
 */
-	class Controller_Front extends Controller_Template
+	class Controller_Front extends Controller
 	{
 		public $template = 'site';
 		private $post_model;
@@ -15,8 +15,9 @@
 			
 			$post_model->query_posts();
 			
-			$this->template->posts = $post_model->select_posts(0,2);
 			
+			$view = View::factory('site')->set('posts', $post_model->select_posts(0,2));
+			$this->response->body($view);
 			
 		}
 		
@@ -26,7 +27,8 @@
 			
 			$post_model->query_posts();
 		
-			$this->template->posts = $post_model->posts;
+			$view = View::factory('site')->set('posts', $post_model->posts);
+			$this->response->body($view);
 		}
 
 	}

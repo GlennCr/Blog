@@ -5,7 +5,7 @@
 /*
 //To Do: Figure out Kohana::Auth and Add in auth methods.
 */
-	class Controller_Auth extends Controller_Template
+	class Controller_Auth extends Controller
 	{
 		public $template = 'login';
 		private $auth_model;
@@ -14,7 +14,7 @@
 		{
 			$auth_model = Model::factory('Login'); //for some reason using 'auth' wouldn't work...
 			//display site view with 'logged in' message if success
-			$this->template->debug = "Hello World!";
+			
 			
 			//unable to get $_POST values so this doesn't do much here
 			
@@ -27,6 +27,9 @@
 				$password = $view_input['password'];
 				die('got $_POST values! Remove this die! Figure out Auth!');
 			}
+			
+			$view = View::factory('site')->set('debug', "Hello World!");
+			$this->response->body($view);
 		}
 	}
 

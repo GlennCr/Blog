@@ -4,9 +4,8 @@
 //repository/blog/application/classes/controller/editpost.php
 //handles directing modifications to posts including content edits and deletion
 
-	class Controller_Editpost extends Controller_Template
-	{
-		public $template = 'modify';		
+	class Controller_Editpost extends Controller
+	{	
 		private $post_model;
 		
 		public function action_index()
@@ -22,12 +21,9 @@
 			}
 			
 			$post = $post_model->select_posts(0,1);
-			$this->template->post = $post[0];
-			$this->template->pagetitle = 'Modify '.$post[0]['title'];
-			//below are from an example, what are these for?
-			//$this->template->content = View::factory('elements/form');
-			//$this->template->navigation = $this->_simple_nav();
-
+			$view = View::factory('modify')->set('posts', $post[0]);			
+			$view->set('pagetitle', $post[0]['title']);
+			$this->response->body($view);
 		}
 		
 		public function action_update()
@@ -56,10 +52,9 @@
 			//redirect would be better here?
 			$post_model->query_posts($p_id);
 			$post = $post_model->select_posts(0,1);
-			$this->template->post = $post[0];
-			$this->template->pagetitle = 'Modify '.$post[0]['title'];
-			
-			
+			$view = View::factory('modify')->set('posts', $post[0]);			
+			$view->set('pagetitle', 'Modified Post '.$post[0]['title']);
+			$this->response->body($view);
 			
 		}
 		
@@ -80,9 +75,9 @@
 
 			$post_model->query_posts();
 			$post = $post_model->select_posts(0,1);
-			$this->template->post = $post[0];
-			$this->template->pagetitle = 'Modify '.$post[0]['title'];
-			
+			$view = View::factory('modify')->set('posts', $post[0]);			
+			$view->set('pagetitle', 'Created Post: '.$post[0]['title']);
+			$this->response->body($view);
 		}
 		
 		public function action_delete()
@@ -106,9 +101,9 @@
 			
 			$post_model->query_posts();
 			$post = $post_model->select_posts(0,1);
-			$this->template->post = $post[0];
-			$this->template->pagetitle = 'Modify '.$post[0]['title'];
-			
+			$view = View::factory('modify')->set('posts', $post[0]);			
+			$view->set('pagetitle', "Deleted Post: ".$p_id);
+			$this->response->body($view);
 			
 		}
 		
