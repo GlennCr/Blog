@@ -150,7 +150,13 @@ Route::set('modify', '(<controller>(/<action>(/<id>)))')
 		'action'    => 'index',
 	));
 
- 
+
+Route::set('auth', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'auth',
+		'action'     => 'logout',
+	));
+	
 Route::set('auth', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'auth',

@@ -13,23 +13,55 @@
 		public function action_index()
 		{
 			$auth_model = Model::factory('Login'); //for some reason using 'auth' wouldn't work...
-			//display site view with 'logged in' message if success
-			
-			
-			//unable to get $_POST values so this doesn't do much here
-			
 			$view_input = array();
-			if(Arr::get($_POST, 'hidden') == 'log_auth')
-			{	
-				$keys = array('username', 'password');
-				$view_input = Arr::extract($_POST, $keys, NULL);
-				$username = $view_input['username'];
-				$password = $view_input['password'];
-				die('got $_POST values! Remove this die! Figure out Auth!');
-			}
 			
-			$view = View::factory('site')->set('debug', "Hello World!");
-			$this->response->body($view);
+			$keys = array('userfield', 'passfield');
+			$view_input = Arr::extract($_POST, $keys, NULL);
+			
+			$user = $view_input['userfield'];
+			$pass = $view_input['passfield'];
+			
+			switch(Arr::get($_POST, 'req_type'))
+			{
+				case 'Login':
+					$auth_model->login($user, $pass);	
+					break;
+				case 'Register':
+					$auth_model->register($user, $pass);
+				default:
+			}
+			/*
+			if(Arr::get($_POST, 'req_type') == 'Login')
+			{	
+				$keys = array('userfield', 'passfield');
+				$view_input = Arr::extract($_POST, $keys, NULL);
+				
+				$user = $view_input['userfield'];
+				$pass = $view_input['passfield'];
+				
+				$auth_model->login($user, $pass);	
+			}
+			*/
+			
+			//$view = View::factory('site')->set('debug', "Hello World!");
+			//$this->response->body($view);
+			//if valid redirect to front page
+			
+			$front_route = Route::get('default')->uri(array('controller'=>'front','action'=>'index'));
+			$this->request->redirect($front_route);
+			//else, redirect to login failed page
+		}
+		
+		public function action_logout()
+		{
+			$session = Session::instance();
+			$sesdat = $session->as_array();
+			$auth_model = Model::factory('Login');
+			
+			$auth_model->logout();
+
+			$front_route= Route::get('default')->uri(array('controller'=>'front', 'action'=>'index'));
+			$this->request->redirect($front_route);
 		}
 	}
 

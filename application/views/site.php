@@ -79,42 +79,62 @@
 	</head>
 	<body>
 		
-			<div class="login">
-			<?PHP
-				echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
-				echo Form::hidden('hidden', 'log_auth');
-				echo Form::input('userfield', 'username');
-				echo Form::password('passfield', 'password');
-				echo Form::submit('Login', 'login');
-				echo Form::close();
-			?>
-			</div>
+		<div class="login">
+		<?PHP
+			echo View::factory('loginpart');
+		?>
+		</div>
 		
 		<div class="par">
 		<?PHP 
+			$session = Session::instance();
+			$sesdat = $session->as_array();
+			
 			//each post gets it's own box, with style attached.
 			//Set title as a link, inline the p_id for $_GET to use.
-			foreach($posts as $post)
+			if(isset($sesdat['loggedin']))
 			{
-			$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."...");
-				echo '<div class="ex">';
-				echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'" class="title">';
-				echo $post['title'].'</a> </br>';
-				echo '<p class="content">'.$content.'</p></br>';
-				echo '<p class="details">'.$post['author'].' | '.$post['timestamp'].'</p>';
-				echo '<hr>';
-				
-				echo '<form action="http://dev.vm/blog/editpost/?p_id='.$post['p_id'].'" method="post" class="details">';
-				echo Form::submit('modify', 'editpost');
-				echo Form::close();
-				echo "</div>";
-			}		
+				echo View::factory('makepost');
+			}
+			
+			if(isset($posts))
+			{
+				foreach($posts as $post)
+				{
+				$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."...");
+					echo '<div class="ex">';
+					if(isset($sesdat['loggedin']))
+					{
+						echo '<form action="http://dev.vm/blog/editpost/?p_id='.$post['p_id'].'" method="post" class="title">';
+						echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'"> '. Form::submit('modify', 'editpost');
+						echo Form::close();
+					}
+					else
+						echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'" class="title">';
+					echo $post['title'].'</a> </br>';
+					echo '<p class="content">'.$content.'</p></br>';
+					echo '<p class="details">'.$post['author'].' | '.$post['timestamp'].'</p>';
+					echo '<hr>';
+					
+					if(isset($sesdat['loggedin']))
+					{					
+						echo '<div class="delete">';
+						echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>"; 
+						echo Form::hidden('p_id', $post['p_id']);
+						echo Form::hidden('hidden', 'delete');
+						echo Form::submit('submit', 'Delete');
+						echo Form::close();
+						echo '</div>';
+						
+					}
+					echo "</div>";
+				}
+			}
 		?>
 		</div>
 		
 		<div class="home">
 			<a href="http://dev.vm/blog/front/allposts"> View All Posts</a></br></br>
-			<a href="http://dev.vm/blog/">Home</a></br>
 		</div>
 		
 	</body>

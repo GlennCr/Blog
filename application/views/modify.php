@@ -93,7 +93,9 @@
 		
 		<div class="ex">
 		<?PHP
-
+			$session = Session::instance();
+			$sesdata = $session->as_array();
+			
 			$title = $posts['title'];
 			$content = $posts['content'];
 			
@@ -106,25 +108,6 @@
 			echo '<div>'.Form::textarea('content', $posts['content']).'</div>';
 			echo Form::submit('submit', 'Modify post');
 			echo Form::close();
-			
-			echo '<div>';
-			echo "<div><form action=\"http://dev.vm/blog/editpost/create\" method=\"post\"></div>"; 
-			echo Form::hidden('hidden', 'add_post');
-			echo '<div>Title: '.Form::input('title', 'Title').'</div>';
-			echo '<div>Author: '.Form::input('author', 'Author').'</div>';
-			echo '<div>'.Form::textarea('content').'</div>';
-			echo Form::submit('submit', 'Add Post');
-			echo Form::close();
-			echo '</div>';
-
-			echo '<div class="delete">';
-			echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>"; 
-			echo Form::hidden('p_id', $posts['p_id']);
-			echo Form::hidden('hidden', 'delete');
-			echo Form::submit('submit', 'Delete');
-			echo Form::close();
-			echo '</div>';
-			
 
 			?>
 		</div>

@@ -73,11 +73,8 @@
 				die('Something in Controller_Editpost::action_create() failed!');
 			}
 
-			$post_model->query_posts();
-			$post = $post_model->select_posts(0,1);
-			$view = View::factory('modify')->set('posts', $post[0]);			
-			$view->set('pagetitle', 'Created Post: '.$post[0]['title']);
-			$this->response->body($view);
+			$front_route = Route::get('default')->uri(array('controller'=>'front', 'action'=>'index'));
+			$this->request->redirect($front_route);
 		}
 		
 		public function action_delete()
@@ -99,11 +96,15 @@
 				die('Something in Controller_Editpost::action_update() failed!');
 			}
 			
+			/*
 			$post_model->query_posts();
 			$post = $post_model->select_posts(0,1);
 			$view = View::factory('modify')->set('posts', $post[0]);			
 			$view->set('pagetitle', "Deleted Post: ".$p_id);
 			$this->response->body($view);
+			*/
+			$front_route = Route::get('default')->uri(array('controller'=>'front', 'action'=>'index'));
+			$this->request->redirect($front_route);
 			
 		}
 		

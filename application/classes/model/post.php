@@ -48,9 +48,7 @@
 		public function edit_post($post)
 		{	//pass in a post, what ever is stored in the title and content will be updated to match in the table
 			//update a post row with the revised information.
-			//die('UPDATE posts (title, content) VALUES ('.$post['title'].', '.$post['content'].' WHERE p_id = '.$post['p_id']);
 			$query = DB::query(Database::UPDATE, 'UPDATE `posts` SET `title` = \''.$post['title'].'\', `content` = "'.$post['content'].'" WHERE p_id = '.$post['p_id'] )->execute();
-			//UPDATE `blog`.`posts` SET `content` = 'Just another post. Made to better show the ''all posts'' controller and what it''s doing as well as give me something else to click modify on. Nothing to see here really. Nothing at all. p' WHERE `posts`.`p_id` =6;
 		}
 		
 		public function delete_post($p_id)
