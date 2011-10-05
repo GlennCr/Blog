@@ -1,0 +1,16 @@
+CREATE  TABLE IF NOT EXISTS `mydb`.`posts` (
+  `p_id` INT NOT NULL AUTO_INCREMENT ,
+  `author` VARCHAR(45) NULL ,
+  `title` VARCHAR(45) NULL ,
+  `content` TEXT NULL ,
+  `timestamp` TIMESTAMP NULL ,
+  PRIMARY KEY (`p_id`) )
+COMMENT = 'posts for blog' ;
+
+CREATE  TABLE IF NOT EXISTS `mydb`.`auth` (
+  `u_id` INT NOT NULL ,
+  `username` VARCHAR(45) NULL ,
+  `password` VARCHAR(45) NULL ,
+  PRIMARY KEY (`u_id`) );
+
+INSERT INTO `posts` (`title`, `author`, `content`) VALUES ("test", "test", "test");
