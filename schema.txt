@@ -13,4 +13,4 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`auth` (
   `password` VARCHAR(45) NULL ,
   PRIMARY KEY (`u_id`) );
 
-INSERT INTO `posts` (`title`, `author`, `content`) VALUES ("test", "test", "test");
+INSERT INTO `posts` (`title`, `author`, `content`, `timestamp`) VALUES ("test", "test", "test", NOW());

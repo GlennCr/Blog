@@ -52,7 +52,7 @@
 		}
 		
 		public function delete_post($p_id)
-		{//delete the post with the id $p_id
+		{//delete the post with the id $p_ido
 			$query = DB::query(Database::DELETE, 'DELETE FROM posts WHERE p_id = '.$p_id)->execute();
 		}
 		
