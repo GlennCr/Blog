@@ -100,8 +100,8 @@
 			$content = $posts['content'];
 			
 			echo $title.'</br>';
-			echo "<div><form action=\"http://dev.vm/blog/editpost/update\" method=\"post\"></div>"; 
-			//Form::open('update') seems intent on ignoring my URI shortening rules...?
+			//echo "<div><form action=\"http://dev.vm/blog/editpost/update\" method=\"post\"></div>";
+			echo Form::open(Route::get('modify')->uri(array( 'controller'=>'editpost', 'action'=>'update')));
 			echo '<div>'.Form::hidden('hidden', 'form_sent').'</div>';
 			echo '<div>'.Form::hidden('p_id', $posts['p_id']).'</div>';
 			echo '<div>'.Form::input('title', $posts['title']).'</div>';
@@ -113,7 +113,7 @@
 		</div>
 		
 		<p class="home">
-			<a href="http://dev.vm/blog/">HOME</a>
+			<a href="<?PHP echo URL::site(); ?>">HOME</a>
 		</p>
 		
 	</body>

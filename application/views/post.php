@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<style type ="text/css">
@@ -102,7 +101,7 @@
 		</div>
 		
 		<p class="home">
-			<a href="http://dev.vm/blog/">HOME</a>
+			<a href="<?PHP echo Site::url; ?>">HOME</a>
 			
 		</p>
 		

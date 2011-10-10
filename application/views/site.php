@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<style type ="text/css">
@@ -108,19 +107,20 @@
 					{
 						$content = (strlen($post['content']) < 50) ? $post['content'] : (substr($post['content'], 0, 50)."...");
 						echo '<div class="ex">';
-						if(isset($sesdat['loggedin']))
-						{
-							echo '<form action="http://dev.vm/blog/editpost/?p_id='.$post['p_id'].'" method="post" class="title">';
-							echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'"> '. Form::submit('modify', 'editpost');
-							echo Form::close();
-						}
-						else
-						//
-						//DO MORE LIKE THIS, GIVES RELATIVE URL
-						//
-							echo '<a href="'. URL::site(Route::get('view')->uri(array('action' => 'index'))).'?p_id='.$post['p_id'].'" class="title">';
-							//echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'" class="title">';
-						echo $post['title'].'</a> </br>';
+							//title edit button conditional below. If we are logged in show a button.
+							//this code is ugly and I know it, just trying to make it work.
+							echo '<div class="title">';
+							if(isset($sesdat['loggedin']))
+							{	
+								echo Form::open(Route::get('modify')->uri(array('controller'=>'editpost', 'action'=>'index')));
+								echo Form::hidden('p_id', $post['p_id']);
+								echo Form::submit('modify', 'editpost');
+								echo Form::close();						
+							}
+							echo '<a href="'.URL::site(Route::get('view')->uri(array('controller'=>'viewpost', 'action' => 'index'))).'?p_id='.$post['p_id'].'" class="title">';
+							echo $post['title'].'</a>';
+							echo '</div> </br></br>';
+							
 						echo '<p class="content">'.$content.'</p></br>';
 						echo '<p class="details">'.$post['author'].' | '.$post['timestamp'].'</p>';
 						echo '<hr>';
@@ -128,7 +128,7 @@
 						if(isset($sesdat['loggedin']))
 						{					
 							echo '<div class="delete">';
-							echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>";
+							echo Form::open(Route::get('modify')->uri(array('controller'=>'editpost', 'action'=>'delete')));
 							echo Form::hidden('p_id', $post['p_id']);
 							echo Form::hidden('hidden', 'delete');
 							echo Form::submit('submit', 'Delete');
@@ -136,7 +136,10 @@
 							echo '</div>';
 							
 						}
+						
 						echo "</div>";
+						
+						//if a count is set, count down remaining posts we can add.
 						if(isset($limit))
 						{
 							$count = $count - 1;
@@ -148,7 +151,12 @@
 		</div>
 		
 		<div class="home">
-			<a href="http://dev.vm/blog/front/allposts"> View All Posts</a></br></br>
+			<?PHP
+			
+			$viewall_route = Route::get('viewall')->uri(array('controller'=>'front', 'action'=>'allposts'));
+			echo '<a href="'.URL::site($viewall_route).'"> View All Posts</a></br>';
+			?>
+			<a href="<?PHP echo URL::site(); ?>">HOME</a><br/>
 		</div>
 		
 	</body>

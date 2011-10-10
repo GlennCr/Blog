@@ -9,7 +9,7 @@
 		$sesdat = $session->as_array();
 		if(isset($sesdat['loggedin']))
 		{
-			echo "<form action=\"http://dev.vm/blog/auth/logout\" method=\"post\">";
+			echo Form::open(Route::get('auth')->uri(array('controller'=>'auth', 'action'=>'logout')));
 			echo Form::hidden('hidden', 'logout');
 			echo $sesdat['username']." | ".Form::submit('Logout', 'Logout');
 			echo Form::close();

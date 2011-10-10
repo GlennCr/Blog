@@ -95,7 +95,8 @@
 			$sesdat = Session::instance()->as_array();
 			
 			echo '<div class="ex">';
-			echo "<div><form action=\"http://dev.vm/blog/editpost/create\" method=\"post\"></div>"; 
+			//echo "<div><form action=\"http://dev.vm/blog/editpost/create\" method=\"post\"></div>";
+			echo Form::open(Route::get('modify')->uri(array('controller'=>'editpost', 'action'=>'create')));
 			echo Form::hidden('hidden', 'add_post');
 			echo Form::hidden('author', $sesdat['username']);
 			echo '<div>Title: '.Form::input('title', '').'</div>';

@@ -13,10 +13,11 @@
 			$template = 'modify';
 			
 			$post_model = Model::factory('Post');
-			if(isset($_GET['p_id']))
+			
+			
+			$p_id = Arr::get($_POST, 'p_id');
+			if($p_id > 0)
 			{
-				$p_id = $_GET['p_id'];
-		
 				$post_model->query_posts($p_id);
 			}
 			
