@@ -16,7 +16,8 @@
 		}
 		else
 		{
-			echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
+			//echo "<div><form action=\"http://dev.vm/blog/auth/\" method=\"post\"></div>";
+			echo Form::open(Route::get('auth')->uri(array('controller'=>'auth', 'action'=>'index')));
 			echo Form::input('userfield', 'username');
 			echo Form::password('passfield', 'password');
 			echo Form::submit('req_type', 'Login');

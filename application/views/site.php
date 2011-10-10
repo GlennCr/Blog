@@ -115,7 +115,11 @@
 							echo Form::close();
 						}
 						else
-							echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'" class="title">';
+						//
+						//DO MORE LIKE THIS, GIVES RELATIVE URL
+						//
+							echo '<a href="'. URL::site(Route::get('view')->uri(array('action' => 'index'))).'?p_id='.$post['p_id'].'" class="title">';
+							//echo '<a href="http://dev.vm/blog/viewpost/?p_id='.$post['p_id'].'" class="title">';
 						echo $post['title'].'</a> </br>';
 						echo '<p class="content">'.$content.'</p></br>';
 						echo '<p class="details">'.$post['author'].' | '.$post['timestamp'].'</p>';
@@ -124,7 +128,7 @@
 						if(isset($sesdat['loggedin']))
 						{					
 							echo '<div class="delete">';
-							echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>"; 
+							echo "<div><form action=\"http://dev.vm/blog/editpost/delete\" method=\"post\"></div>";
 							echo Form::hidden('p_id', $post['p_id']);
 							echo Form::hidden('hidden', 'delete');
 							echo Form::submit('submit', 'Delete');
